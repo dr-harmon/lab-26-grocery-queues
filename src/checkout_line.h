@@ -35,7 +35,9 @@ public:
 
     // Adds a new customer to the line.
     void addCustomer(Time time) {
-        // TODO
+        Customer customer;
+        customer.startWaiting(time);
+        queue.enqueue(customer);
     }
 
     // Returns the number of customers waiting (including the one being served).
@@ -62,7 +64,15 @@ private:
     // Finishes serving the current customer, if any, and moves it from the line
     // to the list of served customers.
     void serveNextCustomer(Time time) {
-        // TODO
+        if (queue.isEmpty()) {
+            isServingCustomer = false;
+        } else {
+            isServingCustomer = true;
+            Customer servedCustomer = queue.dequeue();
+            servedCustomer.finishCheckout(time);
+            servedCustomers.push_back(servedCustomer);
+            serviceTime = 0;
+        }
     }
 
     Queue<Customer> queue;

@@ -94,8 +94,19 @@ private:
     // Returns the index (0 being the first) of the line with the shortest length.
     // Returns the first shortest line if there is more than one.
     int getShortestLine() const {
-        // TODO
-        return 0;
+        int shortestLength = 0;
+        for (auto& line : checkoutLines) {
+            shortestLength = std::min(shortestLength, line.getLength());
+        }
+        int shortestIndex = 0;
+        for (int i = 0; i < checkoutLines.size(); i++) {
+            if (checkoutLines[i].getLength() == shortestLength) {
+                shortestIndex = i;
+                break;
+            }
+        }
+
+        return shortestIndex;
     }
 
     // Returns true if a customer has arrived at the given time.
